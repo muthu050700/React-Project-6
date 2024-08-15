@@ -54,7 +54,7 @@ const SearchPlayer = ({
         viewport={{
           once: true,
         }}
-        className="bg-orange-600 w-fit px-3 py-2 text-lg font-medium rounded-sm text-white ml-5"
+        className="bg-orange-600 md:w-fit w-[130px]  px-3 py-2 text-lg font-medium rounded-sm text-white ml-5"
         onClick={() => {
           handleSearch();
         }}
@@ -80,7 +80,7 @@ const SearchPlayer = ({
         viewport={{
           once: true,
         }}
-        className="bg-orange-600 w-fit px-3 py-2 text-lg font-medium rounded-sm text-white ml-5"
+        className="bg-orange-600 md:w-fit w-[130px]  px-3 py-2 text-lg font-medium rounded-sm text-white ml-5"
         onClick={handleClearSearch}
       >
         Clear Search

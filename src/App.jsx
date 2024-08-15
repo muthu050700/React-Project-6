@@ -16,6 +16,7 @@ import { motion } from "framer-motion";
 //Spinner
 import Spinner from "./Spinner/Spinner";
 import SearchPlayer from "./Components/PlayerForm/SearchPlayer";
+import Footer from "./Components/PlayerForm/Footer";
 
 function App() {
   //player details state
@@ -26,7 +27,8 @@ function App() {
 
   // state for spinner
   const [spinner, setSpinner] = useState(false);
-
+  //confirm Delete
+  const [confirmDelete, setConfirmDelete] = useState(false);
   //Search functionality
   const [searchPlayer, setSearchPlayer] = useState("");
   // usestate to load the data
@@ -71,12 +73,14 @@ function App() {
 
   //Deleting a player
   const handleDelete = async (id) => {
+    setConfirmDelete(true);
     setSpinner(true);
     const deletePlayerRes = await deletePlayerDetailsAPI(id);
     setPlayerDetails(
       playerDetails.filter((value) => value.id !== deletePlayerRes.id)
     );
     setSpinner(false);
+    setConfirmDelete(false);
   };
 
   // Delete Toast
@@ -89,10 +93,13 @@ function App() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      delay: 1000,
+      delay: 2000,
     });
   };
-
+  // conformation before delete
+  useEffect(() => {
+    confirmDelete && alert("Are you sure you want to delete it?");
+  }, [confirmDelete]);
   // Edit Player
   const handleEdit = (id) => {
     setSpinner(true);
@@ -209,6 +216,9 @@ function App() {
             );
           })}
         </div>
+      </div>{" "}
+      <div>
+        <Footer />
       </div>
       <ToastContainer
         theme="colored"
