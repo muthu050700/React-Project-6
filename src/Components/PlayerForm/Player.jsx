@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from "react";
-
+import { motion } from "framer-motion";
 const Player = ({
   name,
   position,
@@ -14,14 +14,36 @@ const Player = ({
   handleEdit,
   editNotify,
   deleteNotify,
+  indexValue,
   id,
 }) => {
   return (
-    <div className=" bg-white/20 backdrop-blur-lg w-[400px] flex flex-col gap-4  shadow-lg rounded-lg p-3 ">
+    <motion.div
+      initial={{
+        opacity: 0,
+        z: -200,
+      }}
+      whileInView={{
+        opacity: 1,
+        z: 0,
+        transition: {
+          ease: "easeIn",
+          delay: 0.4 * indexValue,
+          type: "spring",
+          stiffness: 60,
+          bounce: 20,
+          duration: 1,
+        },
+      }}
+      viewport={{
+        once: true,
+      }}
+      className=" bg-white/20 backdrop-blur-lg w-[400px] flex flex-col gap-4  shadow-lg rounded-lg p-3 "
+    >
       <img
         src={profilePhoto}
         alt="player-image"
-        className="w-full h-[250px] object-cover rounded-md"
+        className="w-full h-[250px] object-cover rounded-md shadow-md"
       />
       <p className="text-3xl font-medium text-center pt-4 pb-3 text-white capitalize">
         Name : {name}
@@ -71,7 +93,7 @@ const Player = ({
           Edit
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

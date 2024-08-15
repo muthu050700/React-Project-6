@@ -5,18 +5,23 @@ import Player from "./Components/PlayerForm/Player";
 //toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+//API Import
 import {
   createPlayerDetailsAPI,
   deletePlayerDetailsAPI,
   readPlayerDetailsAPI,
   updatePlayerDetailsAPI,
 } from "./apis";
+import { motion } from "framer-motion";
+//Spinner
 import Spinner from "./Spinner/Spinner";
+import SearchPlayer from "./Components/PlayerForm/SearchPlayer";
 
 function App() {
   //player details state
   const [playerDetails, setPlayerDetails] = useState([]);
 
+  // search state
   const [searchPlayerDetails, setSearchPlayerDetails] = useState([]);
 
   // state for spinner
@@ -40,6 +45,7 @@ function App() {
     setSearchPlayerDetails([...playerDetails, response]);
     setSpinner(false);
   };
+
   //notify for adding player
   const notify = () => {
     toast.success("Your profile has been added successfully!", {
@@ -53,13 +59,13 @@ function App() {
       delay: 1000,
     });
   };
+
   //read the player details
   const loadPlayerDetails = async () => {
     setSpinner(true);
     const res = await readPlayerDetailsAPI();
     setPlayerDetails(res);
     setSearchPlayerDetails(res);
-
     setSpinner(false);
   };
 
@@ -72,6 +78,7 @@ function App() {
     );
     setSpinner(false);
   };
+
   // Delete Toast
   const deleteNotify = () => {
     toast.warn("Your profile removed successfully!", {
@@ -85,6 +92,7 @@ function App() {
       delay: 1000,
     });
   };
+
   // Edit Player
   const handleEdit = (id) => {
     setSpinner(true);
@@ -94,6 +102,7 @@ function App() {
     setEditPlayer(...newPlayer);
     setSpinner(false);
   };
+
   // Edit toast
   const editNotify = () => {
     toast.info("You can update your profile details in the form.", {
@@ -106,6 +115,7 @@ function App() {
       progress: undefined,
     });
   };
+
   //success for edit
   const successEditNotify = () => {
     toast.info("Player details updated successfully!", {
@@ -118,6 +128,7 @@ function App() {
       progress: undefined,
     });
   };
+
   const formEditPlayer = async (formState, id) => {
     setSpinner(true);
     const editPlayer = await updatePlayerDetailsAPI(formState, id);
@@ -136,6 +147,11 @@ function App() {
     });
     setPlayerDetails(filter);
   };
+  //handle handleClearSearch
+  const handleClearSearch = () => {
+    setPlayerDetails(searchPlayerDetails);
+    setSearchPlayer("");
+  };
   return (
     <>
       <TeamMembersProfile />
@@ -147,30 +163,39 @@ function App() {
         successEditNotify={successEditNotify}
       />
       <div className="bg-gray-900 pb-20">
-        <h1 className="text-white text-center font-bold text-4xl pb-10">
+        <motion.h1
+          initial={{
+            opacity: 0,
+            y: -100,
+          }}
+          whileInView={{
+            opacity: 1,
+            y: 0,
+            transition: {
+              ease: "easeIn",
+              delay: 0.3,
+              type: "spring",
+              stiffness: 60,
+              duration: 1,
+            },
+          }}
+          viewport={{
+            once: true,
+          }}
+          className="text-white text-center font-bold text-4xl pb-10"
+        >
           Player Deatils
-        </h1>
+        </motion.h1>
         <div className="flex flex-col md:flex-row justify-center items-center gap-5 md:gap-0 pb-10">
-          <input
-            type="text"
-            placeholder="Search your name to see your details"
-            className=" borde border-black w-[370px] md:w-[500px] shadow-md py-2 text-lg text-gray-800 rounded-md px-3"
-            value={searchPlayer}
-            onChange={(e) => {
-              setSearchPlayer(e.target.value);
-            }}
+          <SearchPlayer
+            searchPlayer={searchPlayer}
+            setSearchPlayer={setSearchPlayer}
+            handleSearch={handleSearch}
+            handleClearSearch={handleClearSearch}
           />
-          <button
-            className="bg-orange-600 w-fit px-3 py-2 text-lg font-medium rounded-sm text-white ml-5"
-            onClick={() => {
-              handleSearch();
-            }}
-          >
-            Search
-          </button>
         </div>
         <div className="flex gap-20 justify-center flex-wrap px-4 md:px-3">
-          {playerDetails.map((value) => {
+          {playerDetails.map((value, index) => {
             return (
               <Player
                 key={value.id}
@@ -179,6 +204,7 @@ function App() {
                 handleEdit={handleEdit}
                 editNotify={editNotify}
                 deleteNotify={deleteNotify}
+                indexValue={index}
               />
             );
           })}
