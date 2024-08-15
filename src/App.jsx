@@ -154,7 +154,7 @@ function App() {
           <input
             type="text"
             placeholder="Search your name to see your details"
-            className=" borde border-black md:w-[500px] w-[300px] shadow-md py-2 text-lg text-gray-800 rounded-md px-3"
+            className=" borde border-black w-[370px] md:w-[500px] shadow-md py-2 text-lg text-gray-800 rounded-md px-3"
             value={searchPlayer}
             onChange={(e) => {
               setSearchPlayer(e.target.value);
