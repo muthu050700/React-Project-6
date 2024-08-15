@@ -17,13 +17,13 @@ const Player = ({
   id,
 }) => {
   return (
-    <div className=" bg-white/10 backdrop-blur-lg w-[400px] flex flex-col gap-4  shadow-lg rounded-lg p-2 ">
+    <div className=" bg-white/20 backdrop-blur-lg w-[400px] flex flex-col gap-4  shadow-lg rounded-lg p-3 ">
       <img
         src={profilePhoto}
         alt="player-image"
         className="w-full h-[250px] object-cover rounded-md"
       />
-      <p className="text-2xl font-medium text-center pt-4 text-white capitalize">
+      <p className="text-3xl font-medium text-center pt-4 pb-3 text-white capitalize">
         Name : {name}
       </p>
       <div className="flex justify-between flex-wrap gap-4">
@@ -53,7 +53,7 @@ const Player = ({
       </div>
       <div className="flex justify-between">
         <button
-          className="bg-orange-600 w-fit px-3 py-1 text-lg font-medium rounded-md"
+          className="bg-red-700  text-white w-fit px-4 py-2 text-lg font-medium rounded-md"
           onClick={() => {
             handleDelete(id);
             deleteNotify();
@@ -62,7 +62,7 @@ const Player = ({
           Delete
         </button>
         <button
-          className="bg-orange-600 w-fit px-3 py-1 text-lg font-medium rounded-md"
+          className="bg-yellow-600 text-white w-fit px-4 py-2 text-lg font-medium rounded-md"
           onClick={() => {
             handleEdit(id);
             editNotify(name);
