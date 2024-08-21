@@ -13,6 +13,7 @@ import {
   updatePlayerDetailsAPI,
 } from "./apis";
 import { motion } from "framer-motion";
+
 //Spinner
 import Spinner from "./Spinner/Spinner";
 import SearchPlayer from "./Components/PlayerForm/SearchPlayer";
@@ -27,8 +28,7 @@ function App() {
 
   // state for spinner
   const [spinner, setSpinner] = useState(false);
-  //confirm Delete
-  const [confirmDelete, setConfirmDelete] = useState(false);
+
   //Search functionality
   const [searchPlayer, setSearchPlayer] = useState("");
   // usestate to load the data
@@ -73,14 +73,12 @@ function App() {
 
   //Deleting a player
   const handleDelete = async (id) => {
-    setConfirmDelete(true);
     setSpinner(true);
     const deletePlayerRes = await deletePlayerDetailsAPI(id);
     setPlayerDetails(
       playerDetails.filter((value) => value.id !== deletePlayerRes.id)
     );
     setSpinner(false);
-    setConfirmDelete(false);
   };
 
   // Delete Toast
@@ -96,16 +94,14 @@ function App() {
       delay: 2000,
     });
   };
-  // conformation before delete
-  useEffect(() => {
-    confirmDelete && alert("Are you sure you want to delete it?");
-  }, [confirmDelete]);
+
   // Edit Player
   const handleEdit = (id) => {
     setSpinner(true);
     const newPlayer = playerDetails.filter((value) => {
       return value.id === id;
     });
+    console.log(newPlayer);
     setEditPlayer(...newPlayer);
     setSpinner(false);
   };
@@ -143,6 +139,7 @@ function App() {
     const tempProducts = [...playerDetails];
     tempProducts[index] = editPlayer;
     setPlayerDetails(tempProducts);
+    console.log(tempProducts, formState);
     setEditPlayer(null);
     setSpinner(false);
   };
@@ -159,6 +156,7 @@ function App() {
     setPlayerDetails(searchPlayerDetails);
     setSearchPlayer("");
   };
+
   return (
     <>
       <TeamMembersProfile />

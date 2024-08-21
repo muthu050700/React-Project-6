@@ -18,6 +18,7 @@ const PlayerForm = ({
     strength: "",
     profilePhoto: "",
   };
+
   //connecting the form and form details
   const [formDetails, setFormDetails] = useState(initialValue);
   // useEffect to update editplayer details in form
@@ -33,6 +34,7 @@ const PlayerForm = ({
       ...formDetails,
       [e.target.name]: e.target.value,
     });
+    console.log(formDetails);
   };
 
   //submiting the form details
@@ -123,7 +125,7 @@ const PlayerForm = ({
             />
             <label className="font-medium text-lg">Jersey Number:</label>
             <input
-              type="number"
+              type="text"
               name="jerseyNumber"
               id="jerseyNumber"
               required
